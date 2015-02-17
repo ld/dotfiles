@@ -264,7 +264,7 @@ zle -N zle-keymap-select
 
 
 
- completer widget that sets a flag for the duration of
+# completer widget that sets a flag for the duration of
 # the completion so the SIGINT handler knows whether completion
 # is active. It would be better if we could check some internal
 # zsh parameter to determine if completion is running, but as
@@ -459,13 +459,19 @@ vi_mode_indicator () {
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[magenta]%}➦ %{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_ADDED="%{$fg[green]%}✚ "
 ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}⚑ "
 ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✖ "
 ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}▴ "
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%}◒ "
+
+if [ "$USER"=="vagrant" ]; then
+  ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔%{$reset_color%}"
+else
+  ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}%{$reset_color%}"
+fi
+
 
 local return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
 local PROMPT='%F{green}➜ %2c%F{blue} [%f '
