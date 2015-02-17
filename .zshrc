@@ -262,6 +262,44 @@ zle -N zle-keymap-select
 # local current_dir='%~'
 # precmd () print -rP "${user_host} ${current_dir}"
 
+
+
+ completer widget that sets a flag for the duration of
+# the completion so the SIGINT handler knows whether completion
+# is active. It would be better if we could check some internal
+# zsh parameter to determine if completion is running, but as
+# far as I'm aware that isn't possible.
+function interruptible-expand-or-complete {
+    COMPLETION_ACTIVE=1
+
+    # Bonus feature: automatically interrupt completion
+    # after a three second timeout.
+    # ( sleep 3; kill -INT $$ ) &!
+
+    zle expand-or-complete
+
+    COMPLETION_ACTIVE=0
+}
+
+# Bind our completer widget to tab.
+zle -N interruptible-expand-or-complete
+bindkey '^I' interruptible-expand-or-complete
+
+# Interrupt only if completion is active.
+function TRAPINT {
+    if [[ $COMPLETION_ACTIVE == 1 ]]; then
+        COMPLETION_ACTIVE=0
+        zle -M "Completion canceled."
+
+        # Returning non-zero tells zsh to handle SIGINT,
+        # which will interrupt the completion function.
+        return 1
+    else
+        # Returning zero tells zsh that we handled SIGINT;
+        # don't interrupt whatever is currently running.
+        return 0
+    fi
+}
 # ======================== Customized Scripts ==================================
 # extract filename.zip
 extract () {
@@ -396,7 +434,7 @@ function pdf_join {
 
 alias cleanDNS='sudo discoveryutil udnsflushcaches'
 
-alias resetSparkInspector='rm ~/Library/Application Support/.spark_settings'
+alias resetSparkInspector="rm '~/Library/Application Support/.spark_settings'"
 
 # ============================= Linux Only =====================================
 # Set Solarized color
