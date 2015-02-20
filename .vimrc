@@ -2,7 +2,7 @@
 " Author:  Lin Dong
 " Version: 0.2
 " README: TODO
-" Last_modify: Feb 15, 2015
+" Last_modify: Feb 19, 2015
 " Description: My Vim Configuration file
 " ==============================================================================
 
@@ -281,6 +281,9 @@ Plugin 'lukaszkorecki/CoffeeTags'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
+" Plugin 'groenewege/vim-less'
+" Plugin 'briancollins/vim-jst'
+
 " json
 Plugin 'elzr/vim-json'
 " TODO list
@@ -289,6 +292,8 @@ Plugin 'vim-scripts/TaskList.vim'
 Plugin 'plasticboy/vim-markdown'
 "python highlight
 " Plugin 'hdima/python-syntax'
+
+" Plugin 'derekwyatt/vim-scala'
 
 " JavaScript
 "  Plugin 'vim-scripts/SyntaxComplete'
@@ -354,7 +359,7 @@ Plugin 'mattn/calendar-vim'
 Plugin 'mattn/emmet-vim'
 
 " CSS coloring
-Plugin 'gorodinskiy/vim-coloresque'
+" Plugin 'gorodinskiy/vim-coloresque'
 Plugin 'guns/xterm-color-table.vim'
 
 " auto save, auto-save
@@ -385,9 +390,9 @@ Plugin 'terryma/vim-expand-region'
 " increment
 " Plugin 'vim-scripts/BlockWork'
 " Plugin 'qwertologe/nextval.vim'
-" Plugin 'vim-scripts/VisIncr'
+Plugin 'vim-scripts/VisIncr'
 " \as to activate autonumbering
-Plugin 'vim-scripts/autonumbering-in-vim'
+" Plugin 'vim-scripts/autonumbering-in-vim'
 "Insert line numbers: http://vim.wikia.com/wiki/Insert_line_numbers
 
 
@@ -402,14 +407,14 @@ Plugin 'vim-scripts/sketch.vim' " uses mouse
 " Plugin 'LaTeX-Box-Team/LaTeX-Box'
 
 " Auto detect CJK and Unicode file encodings
-" Plugin 'mbbill/fencview'
+Plugin 'mbbill/fencview'
 
 " rst
 " Plugin 'rykka/os.vim'
 " Plugin 'Rykka/clickable.vim'
 " Plugin 'Rykka/clickable-things'
 " Plugin 'Rykka/riv.vim'
-"  Plugin 'nvie/vim-rst-tables'
+" Plugin 'nvie/vim-rst-tables'
 
 " Gist
 Plugin 'mattn/webapi-vim'
@@ -427,15 +432,22 @@ Plugin 'benjaminwhite/Benokai'
 Plugin 'romainl/flattened'
 
 " Mini Buffer
-Plugin 'techlivezheng/vim-plugin-minibufexpl'
-Plugin 'ldong/vim_bclose'
-" Plugin 'ldong/vim-listify'
+" Plugin 'techlivezheng/vim-plugin-minibufexpl'
 
 " using vim as slides
 "  Plugin 'ingydotnet/vroom-pm'
 
+" split vim into two pane
+" Plugin 'vim-voom/VOoM'
+" Plugin 'vim-voom/VOoM_extras'
+
+" ldong
+Plugin 'ldong/vim_bclose'
+" Plugin 'ldong/vim-listify'
+
 " Games
-Plugin 'yegappan/battleship'
+Plugin 'ldong/battleship'
+
 " <Leader>te
 " Game tetris
 " Plugin 'vim-scripts/TeTrIs.vim'
@@ -461,8 +473,11 @@ nmap <silent> <leader>nt :NERDTreeToggle<CR>
 " ,tb to open tagbar
 nmap <silent> <leader>tb :TagbarToggle<CR>
 " Ctags, check the parent directories for tags, too.
-set tags=./tags,tags;$HOME"
+set tags=./.tags;,./tags
 let g:easytags_dynamic_files = 1
+let g:easytags_file = '~/.vim/tags'
+let g:easytags_updatetime_min=12000
+let g:easytags_async = 1
 
 " fix whitespace
 command! F FixWhitespace
@@ -476,10 +491,10 @@ autocmd FileType html,css,eruby,markdown,php EmmetInstall
 nnoremap <leader>h :GundoToggle<CR>
 
 " MiniBufExplorer
-let g:miniBufExplCycleArround = 1
-map <Leader>b :MBEToggle<cr>
-map <Leader>p :MBEbn<cr>
-map <leader>P :MBEbp<cr>
+" let g:miniBufExplCycleArround = 1
+" map <Leader>b :MBEToggle<cr>
+" map <Leader>p :MBEbn<cr>
+" map <leader>P :MBEbp<cr>
 
 " Airline
 if !exists('g:airline_symbols')
@@ -492,6 +507,7 @@ endif
 let g:airline_theme                        = 'powerlineish'
 let g:airline#extensions#branch#enable     = 1
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#bufferline#enabled= 1
 
 
 " vim-powerline symbols
@@ -549,6 +565,7 @@ let b:PreserveNoEOL = 1
 " <C-j> <C-k> Navigation, keep hands on home row
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <C-p> :Unite file_rec/async<cr>
+nnoremap <Leader>b :Unite buffer<cr>
 nnoremap <space>/ :Unite grep:.<cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<cr>
@@ -565,7 +582,7 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ ], '\|'))
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-nnoremap <C-P> :<C-u>Unite  -buffer-name=files   -start-insert buffer file_rec/async:!<cr>
+nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   let b:SuperTabDisabled = 1
@@ -690,6 +707,12 @@ noremap \ct :!ctags -R .<cr><cr>
 " Sort selection
 noremap \s :sort<cr>
 
+" selec the whole line
+noremap \v ^v$
+
+" selec the whole line without leading space
+noremap \vv 0v$
+
 " Put contents of parentheses on their own newline and reindent (must position
 " cursor inside parentheses in normal mode first).
 nmap \( ci(<cr><esc>Pa<cr><esc>Vkk=
@@ -713,8 +736,11 @@ try " Solarized
     let g:solarized_contrast  = "low"
     set background=light
   else
-    set t_Co=256
+    " set t_Co=256
+    " let g:solarized_termcolors = 256
     let g:solarized_termcolors = 16
+    let g:solarized_visibility = "high"
+    let g:solarized_contrast = "high"
     colorscheme solarized
     set background=dark
   endif
@@ -722,7 +748,7 @@ catch /^Vim\%((\a\+)\)\=:E185/
   let g:molokai_original = 1
   let g:rehash256 = 1
   set background=dark
-  for scheme in [ 'molokai', 'monokai', 'desert'  ]
+  for scheme in [ 'molokai', 'monokai', 'Benokai' 'desert'  ]
     try
       execute 'colorscheme '.scheme
       break
@@ -731,12 +757,6 @@ catch /^Vim\%((\a\+)\)\=:E185/
     endtry
   endfor
 endtry
-
-" colorscheme desert
-" colorscheme flattened_dark
-" colorscheme Benokai
-" colorscheme lucario
-" colorscheme monokai
 
 " let g:jellybeans_use_lowcolor_black = 0
 " colorscheme jellybeans
@@ -753,4 +773,3 @@ else
     " fallback for Vim < v7.3
     au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
-

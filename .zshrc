@@ -76,6 +76,7 @@ export LANG=en_US.UTF-8
 # sudo apt-get install vim-nox
 # =============================================================
 
+# PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 # Set up default editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -98,13 +99,15 @@ export EDITOR="$VISUAL"
 
 
 # ========================= Ruby Only =========================
-
 # rvm
 # source ~/.rvm/scripts/rvm
 
 # Add RVM to PATH for scripting
 # PATH=$HOME/.rvm/bin:~/.pyenv/shims:$PATH #ADD pyenv to path
 
+# git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 # ========================= Tmux Only =========================
 
@@ -203,6 +206,9 @@ bindkey -M viins 'JJ' vi-cmd-mode
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '??' history-incremental-search-forward
 bindkey -M vicmd 'H' percol_select_history
+
+# do history expansion on space
+bindkey " " magic-space
 
 # Search for history key bindings
 # ctrl+v UP
@@ -421,6 +427,9 @@ alias killdock='killall -KILL Dock'
 # hide apps, i.e. sudo chflags hidden /Applications/Game\ Center.app
 alias hideapp='sudo chflags hidden '
 
+# edit host
+alias edithosts='sudo vim /private/etc/hosts'
+
 # pdf_join merged.pdf 1.pdf 2.pdf
 function pdf_join {
   join_py="/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py"
@@ -484,3 +493,4 @@ local RPROMPT='$(git_prompt_info) %F{blue}] %F{gray}${vi_mode} %F{green}%D{%L:%M
 # z, fasd, better than autojump
 # colors.sh
 # spectacle, mac app
+
