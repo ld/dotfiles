@@ -475,7 +475,7 @@ ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}▴ "
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%}◒ "
 
-if [ "$USER"=="vagrant" ]; then
+if [ "$USER" '==' "vagrant" ]; then
   ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔%{$reset_color%}"
 else
   ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}%{$reset_color%}"
