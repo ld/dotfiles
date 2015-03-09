@@ -1,5 +1,5 @@
 # Author: Lin Dong
-# Date: Mon Feb 16 23:43:40 UTC 2015
+# Date: Mon Mar  9 07:45:24 UTC 2015
 # Dependences:
 #     1. vim
 #     1. tmux
@@ -95,19 +95,19 @@ export EDITOR="$VISUAL"
 # =============================================================
 # node nvm
 # source $(brew --prefix nvm)/nvm.sh
-# source ~/.nvm/nvm.sh
+source ~/.nvm/nvm.sh
 
 
 # ========================= Ruby Only =========================
 # rvm
-# source ~/.rvm/scripts/rvm
+source ~/.rvm/scripts/rvm
 
 # Add RVM to PATH for scripting
-# PATH=$HOME/.rvm/bin:~/.pyenv/shims:$PATH #ADD pyenv to path
+PATH=$HOME/.rvm/bin:~/.pyenv/shims:$PATH #ADD pyenv to path
 
 # git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
 
 # ========================= Tmux Only =========================
 
@@ -441,9 +441,9 @@ function pdf_join {
 
 # whatis $(ls /bin | gshuf -n 1)
 
-alias cleanDNS='sudo discoveryutil udnsflushcaches'
+# alias cleanDNS='sudo discoveryutil udnsflushcaches'
 
-alias resetSparkInspector="rm '~/Library/Application Support/.spark_settings'"
+# alias resetSparkInspector="rm '~/Library/Application Support/.spark_settings'"
 
 # ============================= Linux Only =====================================
 # Set Solarized color
@@ -476,9 +476,9 @@ ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[cyan]%}§ "
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%}◒ "
 
 if [ "$USER" '==' "vagrant" ]; then
-  ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}✔%{$reset_color%}"
+  PROMPT='%F{green}➜ %2c%F{blue} [%f '
 else
-  ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg[green]%}%{$reset_color%}"
+  PROMPT='%F{green}▶ %2c%F{blue} [%f '
 fi
 
 
