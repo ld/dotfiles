@@ -298,6 +298,7 @@ Plugin 'plasticboy/vim-markdown'
 " JavaScript
 "  Plugin 'vim-scripts/SyntaxComplete'
 "  Plugin 'jelera/vim-javascript-syntax'
+"  Plugin 'burnettk/vim-angular'
 "  Plugin 'mattn/jscomplete-vim'
 " JS beautifier, formatting javascript
 " require nodejs and npm -g install js-beautify
@@ -307,6 +308,7 @@ Plugin 'plasticboy/vim-markdown'
 " auto complete
 Plugin 'ervandew/supertab'
 Plugin 'Shougo/neocomplcache.vim'
+Plugin 'othree/vim-autocomplpop'
 
 " Unite, CtrlP
 Plugin 'Shougo/vimproc.vim'
@@ -767,7 +769,8 @@ hi SpellBad cterm=undercurl,bold
 
 " set highlight color after 80 regardless of the version of VIM
 if exists('+colorcolumn')
-    let &colorcolumn="80,".join(range(120,999),",")
+    " let &colorcolumn="80,".join(range(120,999),",")
+    let &colorcolumn="80"
     highlight ColorColumn ctermbg=9 guibg=#df0000
 else
     " fallback for Vim < v7.3
