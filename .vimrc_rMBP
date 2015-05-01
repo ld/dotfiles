@@ -2,7 +2,7 @@
 " Author:  Lin Dong
 " Version: 0.2
 " README: TODO
-" Last_modify: Mon Apr 27 11:52:28 PDT 2015
+" Last_modify: Fri May  1 12:22:25 PDT 2015
 " Description: My Vim Configuration file
 " ==============================================================================
 
@@ -411,6 +411,9 @@ Plugin 'vim-scripts/VisIncr'
 "  Plugin 'vim-scripts/DrawIt'
 Plugin 'vim-scripts/sketch.vim' " uses mouse
 
+" Window management
+Plugin 'wesQ3/vim-windowswap'
+
 " Latex
 " Plugin 'LaTeX-Box-Team/LaTeX-Box'
 
@@ -690,6 +693,9 @@ let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Window_Height = 5
 let MRU_Auto_Close = 1
 
+" Customized Abbreviation
+abbr rq require("");<esc>2
+
 " Java Abbreviation
 abbr psvm public static void main(String[] args){<CR>}<esc>O
 abbr sysout System.out.println("");<esc>2hi
@@ -698,8 +704,12 @@ abbr fori for (int i = 0; i < ; i++) {<esc>7hi
 abbr tryb try {<CR>} catch (Exception ex) {<CR> ex.printStackTrace();<CR>}<esc>hx3ko
 abbr ctm System.currentTimeMillis()
 
-" Customized Abbreviation
-abbr rq require("");<esc>2hi
+
+" windowswap
+"1. Navigate to the window you'd like to move
+"2. Press <leader>ww
+"3. Navigate to the window you'd like to swap with
+"4. Press <leader>ww again
 
 
 " ==============================================================================
