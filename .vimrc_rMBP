@@ -1,8 +1,8 @@
 " ==============================================================================
 " Author:  Lin Dong
-" Version: 0.2
+" Version: 0.3
 " README: TODO
-" Last_modify: Fri May  1 12:22:25 PDT 2015
+" Last_modify: Tue Jun  2 13:56:02 PDT 2015
 " Description: My Vim Configuration file
 " ==============================================================================
 
@@ -43,6 +43,10 @@ set noerrorbells         " don't beep
 set visualbell t_vb=            " turn off error beep/flash
 set t_vb=
 set tm=500
+
+
+" always show report messages
+set report=0
 
 
 " show location
@@ -101,7 +105,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 " NOT SUPPORT
-" fold
 " set foldenable
 " set foldmethod=indent
 " set foldlevel=99
@@ -158,14 +161,19 @@ augroup myfiletypes
   autocmd FileType javascript,js,html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
   autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
+
   " Folding for css
   " autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
+  " autocmd BufNewFile,BufRead *.xml,*.htm,*.html so XMLFolding
+
 
   " Customized for zmanage to use 4 space indentation
   let currDir = getcwd()
-  let fourSpacePath = 'zmanage/web/js/'
-  if currDir =~ fourSpacePath
-    autocmd FileType javascript,js,html set tabstop=4 shiftwidth=4 softtabstop=4 expandtab ai
+  let targetSourcePath ="zmanage/web/js"
+  " let g:z = 1
+  " using echom g:z
+  if currDir =~ targetSourcePath
+    autocmd FileType javascript,js,html,handlebars,hbs set tabstop=4 shiftwidth=4 softtabstop=4 expandtab ai
   endif
 
 augroup END
@@ -307,6 +315,7 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 " Plugin 'groenewege/vim-less'
 " Plugin 'briancollins/vim-jst'
+
 
 " JSX
 Plugin 'mxw/vim-jsx'
@@ -484,7 +493,7 @@ Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'ldong/vim_bclose'
 Plugin 'ldong/vim_autohighlight'
 Plugin 'ldong/vim_copy_paste'
-" Plugin 'ldong/vim-listify'
+Plugin 'ldong/vim-listify'
 
 " Games
 " Plugin 'ldong/battleship'
@@ -519,6 +528,11 @@ let g:easytags_dynamic_files = 1
 let g:easytags_file = '~/.vim/tags'
 let g:easytags_updatetime_min=12000
 let g:easytags_async = 1
+
+" ctags
+let g:tagbar_type_javascript = {
+    \ 'ctagsbin' : '/usr/local/bin/jsctags'
+\ }
 
 " fix whitespace
 command! F FixWhitespace
@@ -668,15 +682,20 @@ let g:syntastic_python_pylint_args='--ignore=E501'
 " highlight python
 " let python_highlight_all = 1
 
+" javascript style guide lint checker
 let g:syntastic_javascript_checkers = ['jsxhint']
 " let g:syntastic_javascript_checkers = ['jsxhint', 'jscs']
+" let g:syntastic_javascript_checkers = []
+
+" let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_scss_checkers = []
 
 " Preview latex after compliation
 " " \ll compile;   \lv view
 " let g:LatexBox_viewer = "open /Applications/Preview.app"
 
 " vim_json settings
-" let g:vim_json_syntax_conceal = 0
+let g:vim_json_syntax_conceal = 0
 " let g:vim_json_warnings=1
 
 " fugitive shortcuts
@@ -821,6 +840,11 @@ vnoremap ;rh c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 " \rv: reverse the order of lines (reverse vertically)
 nmap ;rv :set lz<CR>o<Esc>mz'aO<Esc>ma:'a+1,'z-1g/^/m 'a<CR>'addma'zdd:set nolz<CR>
 
+" replace current word select
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
+
+
 " config backup directory
 set backup
 set backupdir=~/.vimswap
@@ -866,7 +890,7 @@ catch /^Vim\%((\a\+)\)\=:E185/
   let g:molokai_original = 1
   let g:rehash256 = 1
   set background=dark
-  for scheme in [ 'molokai', 'monokai', 'Benokai' 'desert'  ]
+  for scheme in [ 'molokai', 'monokai', 'Benokai' 'desert' ]
     try
       execute 'colorscheme '.scheme
       break
@@ -892,3 +916,38 @@ else
     " fallback for Vim < v7.3
     au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
+
+
+"Vim folding commands
+
+" fold: zf, zo, zc, za
+" zf#j creates a fold from the cursor down # lines.
+" zf/string creates a fold from the cursor to string .
+" zj moves the cursor to the next fold.
+" zk moves the cursor to the previous fold.
+" zo opens a fold at the cursor.
+" zc closes a fold at the cursor.
+" zO opens all folds at the cursor.
+" zm increases the foldlevel by one.
+" zM closes all open folds.
+" zr decreases the foldlevel by one.
+" zR decreases the foldlevel to zero -- all folds will be open.
+" zd deletes the fold at the cursor.
+" zE deletes all folds.
+" [z move to start of open fold.
+" ]z move to end of open fold.
+
+" fold folding, http://goo.gl/jBYmdU
+" set foldcolumn=3
+" set foldmethod=syntax
+" set foldlevelstart=3
+
+" let javaScript_fold=1         " JavaScript
+" let perl_fold=1               " Perl
+" let php_folding=1             " PHP
+" let r_syntax_folding=1        " R
+" let ruby_fold=1               " Ruby
+" let sh_fold_enabled=1         " sh
+" let vimsyn_folding='af'       " Vim script
+" let xml_syntax_folding=1      " XML
+

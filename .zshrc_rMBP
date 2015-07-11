@@ -432,7 +432,6 @@ alias -s bz2='tar -xjvf'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-alias grep='grep --color=auto'
 
 
 
