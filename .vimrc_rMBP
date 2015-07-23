@@ -843,6 +843,8 @@ nmap ;rv :set lz<CR>o<Esc>mz'aO<Esc>ma:'a+1,'z-1g/^/m 'a<CR>'addma'zdd:set nolz<
 " replace current word select
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
+" pretty print json
+nnoremap <leader>J :%!python -m json.tool<CR>
 
 
 " config backup directory
