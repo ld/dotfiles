@@ -69,6 +69,11 @@ export LANG=en_US.UTF-8
 #                            User configuration
 # ==============================================================================
 
+alias cd..="cd .."
+alias cd...="cd ../.."
+alias cd....="cd ../../.."
+alias cd.....="cd ../../../.."
+alias cd......="cd ../../../../.."
 
 # ========================= Vim ===============================
 # Ubuntu
@@ -123,7 +128,7 @@ alias ipy='ipython'
 alias ipython3='python3 -m IPython'
 
 # execute virtualenv wrapper
-# source /usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh
 # source /usr/bin/virtualenvwrapper.sh
 # export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 
@@ -342,6 +347,11 @@ findi() {
   find . -iname $1;
 }
 
+findj() {
+  find . -iname $1"*";
+}
+
+
 # json pretty print
 alias json="python -mjson.tool"
 
@@ -350,7 +360,8 @@ alias v='vim'
 
 # Find out my ip, http://ifconfig.me
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias lanip="ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p'"
+# alias lanip="ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p'"
+alias lanip="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 # alias showip="ifconfig | grep 'inet ' | grep -v 127.0.0.1"
 alias showip="ifconfig | egrep -o '([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}'"
 # ipconfig getifaddr en1
@@ -386,9 +397,11 @@ alias gpushPages='git push origin gh-pages'
 alias gpush='git push origin master'
 alias gpull='git pull origin master'
 alias gitname='git config --global user.name "Lin Dong"'
-alias gitemail='git config --global user.email "ldong@gatech.edu"'
+alias gitemail='git config --global user.email "ldong@ldong.org"'
 alias gclean='git reset --hard && git clean -dfx'
 alias gitcopy='git clone --depth 1 '
+alias giturl='git remote show origin'
+alias gitroot='git rev-parse --show-toplevel'
 
 # Rails
 alias railsUP='rails s -b 0.0.0.0'
@@ -467,6 +480,12 @@ alias cleanDNS='sudo discoveryutil udnsflushcaches'
 
 alias resetSparkInspector="rm '~/Library/Application Support/.spark_settings'"
 
+alias iPadOn='defaults write com.apple.PowerChime ChimeOnAllHardware -bool true; open /System/Library/CoreServices/PowerChime.app & '
+alias iPadOff='defaults write com.apple.PowerChime ChimeOnAllHardware -bool false;killall PowerChime '
+
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias bbb=brewup
+
 # ============================= Linux Only =====================================
 # Set Solarized color
 # eval `dircolors ~/.dircolors`
@@ -509,6 +528,19 @@ else
   PROMPT='%F{green} %2c%F{blue} [%f '
 fi
 
+# SVN
+# ZSH_THEME_SVN_PROMPT_PREFIX="%{$reset_color%}%{$fg[green]%}"
+# ZSH_THEME_SVN_PROMPT_SUFFIX="%{$reset_color%} "
+# ZSH_THEME_SVN_PROMPT_DIRTY="%{$fg[red]%} ✘ %{$reset_color%}"
+# ZSH_THEME_SVN_PROMPT_CLEAN=" "
+
+if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
+  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+  # ZSH_VCS_PROMPT_USING_PYTHON='false'
+  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+  RPROMPT='$(vcs_super_info)$(git_prompt_info) %F{blue}] %F{gray}${vi_mode} %F{green}%D{%L:%M} %F{yellow}%D{%p}%f'
+fi
+
 
 # ============================ iTerm Coloring Stuff =====================================
 # https://gist.github.com/hxx/52f420798ee88009cf32#file-set_iterm2_tab_color-sh
@@ -525,16 +557,29 @@ alias rtc="random_tab_color"
 # colors.sh
 # spectacle, mac app
 
-alias bbb='brew update && brew upgrade && brew cleanup'
-alias fuck='$(thefuck $(fc -ln -1))'
+# SVN
+# svn add all
+function svn-addall(){
+  svn st | grep '^?' | sed 's/^[? ]*/"/' | sed 's/$/"/' | xargs svn add
+  svn status;
+}
+
+# svn stash current working directory to a patch
+function svn-stash(){
+  svn diff > $1.patch; svn revert -R .
+}
+
+# revert patch to current working directory
+function svn-stash-apply(){
+  patch -p0 < $1.patch
+}
+
 
 alias findFileByFileName="find . -type f -name "
 alias cleanSwpFile="find . -name '*.swp' -type f -delete"
 alias cleanDSFile="find . -name '*.DS_Store' -type f -delete"
 
 alias ssldump="sudo /usr/local/Cellar/ssldump/0.9b3/sbin/ssldump "
-
-export NODE_ENV='development'
 
 # check ports
 # lsof -i -P | grep 8090
@@ -547,8 +592,15 @@ export NODE_ENV='development'
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home
 export NODE_PATH="$(npm root -g)":$NODE_PATH
 export PATH=$JAVA_HOME/bin:$PATH:/usr/local/Cellar/
+export NODE_ENV='development'
 
+alias fuck='$(thefuck $(fc -ln -1))'
 alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 alias FUCK='fuck'
-alias force='fuck'
+
+function zss() {
+  cd /Users/ldong/zscaler/ui/userinterface/zmanage/web/scss;
+  sass --watch app.scss:/Users/ldong/zscaler/ui/userinterface/zmanage/build/css/app.css;
+}
+
 
