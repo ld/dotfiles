@@ -1,8 +1,8 @@
 " ==============================================================================
 " Author:  Lin Dong
-" Version: 0.3
+" Version: 0.3.1
 " README: TODO
-" Last_modify: Tue Jun  2 13:56:02 PDT 2015
+" Last_modify: Thu Sep  3 13:09:39 PDT 2015
 " Description: My Vim Configuration file
 " ==============================================================================
 
@@ -310,12 +310,14 @@ Plugin 'othree/html5.vim'
 Plugin 'othree/vim-coffee-script'
 Plugin 'lukaszkorecki/CoffeeTags'
 Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 " Plugin 'groenewege/vim-less'
 " Plugin 'briancollins/vim-jst'
 
+" ES6 ES2015
+Plugin 'othree/yajs.vim'
+" Plugin 'isRuslan/vim-es6'
 
 " JSX
 Plugin 'mxw/vim-jsx'
@@ -324,7 +326,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 " TODO list
 Plugin 'vim-scripts/TaskList.vim'
-" markdown
+" Markdown
 Plugin 'plasticboy/vim-markdown'
 "python highlight
 " Plugin 'hdima/python-syntax'
@@ -332,11 +334,13 @@ Plugin 'plasticboy/vim-markdown'
 " Plugin 'derekwyatt/vim-scala'
 
 " JavaScript
-"  Plugin 'vim-scripts/SyntaxComplete'
-"  Plugin 'jelera/vim-javascript-syntax'
-"  Plugin 'burnettk/vim-angular'
-"  Plugin 'mattn/jscomplete-vim'
+Plugin 'vim-scripts/SyntaxComplete'
+Plugin 'pangloss/vim-javascript'
+" Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'burnettk/vim-angular'
+" Plugin 'mattn/jscomplete-vim'
 Plugin 'marijnh/tern_for_vim'
+
 " JS beautifier, formatting javascript
 " require nodejs and npm -g install js-beautify
 " Plugin 'einars/js-beautify'
@@ -494,6 +498,7 @@ Plugin 'ldong/vim_bclose'
 Plugin 'ldong/vim_autohighlight'
 Plugin 'ldong/vim_copy_paste'
 Plugin 'ldong/vim-listify'
+Plugin 'ldong/file-line'
 
 " Games
 " Plugin 'ldong/battleship'
@@ -709,6 +714,8 @@ noremap \gb :Gblame<cr>
 "surrounding, shortcuts: ds, cs, yss
 "ysiw}
 "ds{
+nmap <Leader>as ysiw
+nmap <Leader>ds ds
 
 
 " Tabularize
@@ -846,6 +853,17 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 " pretty print json
 nnoremap <leader>J :%!python -m json.tool<CR>
 
+" Use numbers to pick the tab you want (like iTerm)
+map <silent> <D-1> :tabn 1<cr>
+map <silent> <D-2> :tabn 2<cr>
+map <silent> <D-3> :tabn 3<cr>
+map <silent> <D-4> :tabn 4<cr>
+map <silent> <D-5> :tabn 5<cr>
+map <silent> <D-6> :tabn 6<cr>
+map <silent> <D-7> :tabn 7<cr>
+map <silent> <D-8> :tabn 8<cr>
+map <silent> <D-9> :tabn 9<cr>
+
 
 " config backup directory
 set backup
@@ -952,4 +970,3 @@ endif
 " let sh_fold_enabled=1         " sh
 " let vimsyn_folding='af'       " Vim script
 " let xml_syntax_folding=1      " XML
-
