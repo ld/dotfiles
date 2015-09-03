@@ -319,8 +319,8 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'othree/yajs.vim'
 " Plugin 'isRuslan/vim-es6'
 
-" JSX
-Plugin 'mxw/vim-jsx'
+" JSX, deprecated
+" Plugin 'mxw/vim-jsx'
 
 " json
 Plugin 'elzr/vim-json'
@@ -688,7 +688,7 @@ let g:syntastic_python_pylint_args='--ignore=E501'
 " let python_highlight_all = 1
 
 " javascript style guide lint checker
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['eslint']
 " let g:syntastic_javascript_checkers = ['jsxhint', 'jscs']
 " let g:syntastic_javascript_checkers = []
 
@@ -734,9 +734,6 @@ vmap <Leader>a,, :Tabularize /,\zs<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
-
-"JSX
-let g:jsx_ext_required = 0
 
 " draw ascii using mouse
 " map <leader>d :call ToggleSketch()<CR>
