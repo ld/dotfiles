@@ -1,8 +1,8 @@
 " ==============================================================================
 " Author:  Lin Dong
-" Version: 0.3.1
+" Version: 0.3.2
 " README: TODO
-" Last_modify: Thu Sep  3 13:09:39 PDT 2015
+" Last Modified Date: Tue Sep 29 10:45:06 PDT 2015
 " Description: My Vim Configuration file
 " ==============================================================================
 
@@ -21,7 +21,7 @@ syntax on
 "i.e. :set syn=python
 
 " history : how many lines of history VIM has to remember
-set history=2000
+set history=10000
 
 " filetype
 filetype on
@@ -160,7 +160,10 @@ augroup myfiletypes
   autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
   autocmd FileType javascript,js,html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
   autocmd BufRead,BufNewFile *.es6 setfiletype javascript
-
+  autocmd BufRead,BufNewFile *.js setfiletype javascript
+  " autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
 
   " Folding for css
   " autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
@@ -296,6 +299,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 
+" File explorer
 Plugin 'scrooloose/nerdtree'
 
 " Errors, open error list
@@ -320,7 +324,7 @@ Plugin 'othree/yajs.vim'
 " Plugin 'isRuslan/vim-es6'
 
 " JSX, deprecated
-" Plugin 'mxw/vim-jsx'
+Plugin 'mxw/vim-jsx'
 
 " json
 Plugin 'elzr/vim-json'
@@ -689,6 +693,7 @@ let g:syntastic_python_pylint_args='--ignore=E501'
 
 " javascript style guide lint checker
 let g:syntastic_javascript_checkers = ['eslint']
+
 " let g:syntastic_javascript_checkers = ['jsxhint', 'jscs']
 " let g:syntastic_javascript_checkers = []
 
