@@ -225,6 +225,7 @@ command! WQ wq
 command! Wq wq
 command! W w
 command! Q q
+command! Q1 q!
 " Q map to q, to quit vim
 command! -bar -bang Q quit<bang>
 
@@ -855,6 +856,9 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 " pretty print json
 nnoremap <leader>J :%!python -m json.tool<CR>
 
+" tidy html
+nnoremap <leader>T :%!tidy -qicbn -asxhtml<CR>
+
 " Use numbers to pick the tab you want (like iTerm)
 map <silent> <D-1> :tabn 1<cr>
 map <silent> <D-2> :tabn 2<cr>
@@ -972,3 +976,19 @@ endif
 " let sh_fold_enabled=1         " sh
 " let vimsyn_folding='af'       " Vim script
 " let xml_syntax_folding=1      " XML
+
+
+" Customized for zmanage to use 4 space indentation
+let currDir = getcwd()
+let targetSourcePath ="zmanage/web/js"
+let g:z = 1
+" using echom g:z
+if currDir =~ targetSourcePath
+  autocmd FileType javascript,js,html,handlebars,hbs set tabstop=4 shiftwidth=4 softtabstop=4 expandtab ai
+  let g:z = 2
+  set suffixesadd+=.js
+  set path+=/Users/ldong/zscaler/ui/userinterface/zmanage/web/js
+  set path+=**
+endif
+
+
