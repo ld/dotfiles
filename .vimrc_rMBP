@@ -182,20 +182,20 @@ augroup myfiletypes
 augroup END
 
 function! AutoSetFileHead()
-    " .sh
-    if &filetype == 'sh'
-        call setline(1, "\#!/bin/bash")
-    endif
+  " .sh
+  if &filetype == 'sh'
+    call setline(1, "\#!/bin/bash")
+  endif
 
-    " python
-    if &filetype == 'python'
-        call setline(1, "\#!/usr/bin/env python")
-        call append(1, "\# encoding: utf-8")
-    endif
+  " python
+  if &filetype == 'python'
+    call setline(1, "\#!/usr/bin/env python")
+    call append(1, "\# encoding: utf-8")
+  endif
 
-    normal G
-    normal o
-    normal o
+  normal G
+  normal o
+  normal o
 endfunc
 
 " others
@@ -211,10 +211,10 @@ au InsertLeave * set nopaste
 " :r! cat and then paste ( shift + insert  ) the content, and CTRL+D.
 
 fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
 endfun
 
 " no ex mode
@@ -322,7 +322,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 
 " ES6 ES2015
 Plugin 'othree/yajs.vim'
-" Plugin 'isRuslan/vim-es6'
+Plugin 'isRuslan/vim-es6'
 
 " JSX, deprecated
 Plugin 'mxw/vim-jsx'
@@ -541,8 +541,8 @@ let g:easytags_async = 1
 
 " ctags
 let g:tagbar_type_javascript = {
-    \ 'ctagsbin' : '/usr/local/bin/jsctags'
-\ }
+      \ 'ctagsbin' : '/usr/local/bin/jsctags'
+      \ }
 
 " fix whitespace
 command! F FixWhitespace
@@ -552,6 +552,7 @@ let g:user_emmet_install_global = 1
 let g:user_emmet_leader_key     = '<leader>e'
 " let g:user_emmet_install_global = 0
 " autocmd FileType html,css,eruby,markdown,handlebars,hbs,php EmmetInstall
+
 
 " Gundo toggle
 nnoremap <leader>h :GundoToggle<CR>
@@ -574,7 +575,7 @@ nnoremap <leader>h :GundoToggle<CR>
 
 " Airline
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 " use powerline font if installed
 " let g:airline_powerline_fonts = 1
@@ -646,18 +647,6 @@ nnoremap <space>/ :Unite grep:.<cr>
 let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite history/yank<cr>
 nnoremap <space>s :Unite -quick-match buffer<cr>
-
-let g:SuperTabCrMapping = 0
-let g:unite_enable_start_insert = 1
-let g:unite_split_rule = "botright"
-let g:unite_force_overwrite_statusline = 0
-let g:unite_winheight = 5
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/',
-      \ ], '\|'))
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
 nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
@@ -669,6 +658,37 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
   nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction
+
+let g:SuperTabCrMapping = 0
+let g:unite_enable_start_insert = 1
+let g:unite_split_rule = "botright"
+let g:unite_force_overwrite_statusline = 0
+let g:unite_source_rec_max_cache_files = 0
+let g:ctrlp_max_files     = 0
+let g:CommandTMaxFiles    = 200000
+let g:CommandTFileScanner = 'find'
+let g:unite_winheight = 10
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#custom_source('file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ '\.svn/',
+      \ 'node_modules/',
+      \ ], '\|'))
+call unite#custom_source('file_rec/async', 'converters', [])
+call unite#custom_source('file_rec/async', 'sorters', [])
+call unite#custom_source('file_rec/async', 'max_candidates', 100)
+call unite#custom_source('file_rec/async,file_rec/git', 'ignore_globs', [])
+
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+elseif executable('ack-grep')
+  let g:unite_source_grep_command = 'ack-grep'
+elseif executable('ack')
+  let g:unite_source_grep_command = 'ack'
+endif
+
 
 " Appropriately close the buffer without closing the window
 cnoremap <expr> bd (getcmdtype() == ':' ? 'Bclose' : 'bd')
@@ -768,6 +788,8 @@ abbr fori for (int i = 0; i < ; i++) {<esc>7hi
 abbr tryb try {<CR>} catch (Exception ex) {<CR> ex.printStackTrace();<CR>}<esc>hx3ko
 abbr ctm System.currentTimeMillis()
 
+" Vim preview markdown
+autocmd BufNewFile,BufRead \*.{md,mdwn,mkd,mkdn,mark\*} set filetype=markdown
 
 " windowswap
 "1. Navigate to the window you'd like to move
@@ -935,12 +957,12 @@ hi SpellBad cterm=undercurl,bold
 
 " set highlight color after 80 regardless of the version of VIM
 if exists('+colorcolumn')
-    " let &colorcolumn="80,".join(range(120,999),",")
-    let &colorcolumn="80"
-    highlight ColorColumn ctermbg=9 guibg=#df0000
+  " let &colorcolumn="80,".join(range(120,999),",")
+  let &colorcolumn="80"
+  highlight ColorColumn ctermbg=9 guibg=#df0000
 else
-    " fallback for Vim < v7.3
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+  " fallback for Vim < v7.3
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
 
@@ -980,7 +1002,7 @@ endif
 
 " Customized for zmanage to use 4 space indentation
 let currDir = getcwd()
-let targetSourcePath ="zmanage/web/js"
+let targetSourcePath ="zscaler"
 let g:z = 1
 " using echom g:z
 if currDir =~ targetSourcePath
